@@ -1,5 +1,5 @@
 import { Job } from "../models/job.model.js";
-
+//admin
 export const postJob = async (req, res) => {
   try {
     const {
@@ -50,7 +50,7 @@ export const postJob = async (req, res) => {
     console.log("Error in PostJob", e);
   }
 };
-
+//students
 export const getAllJobs = async (req, res) => {
   try {
     const keyword = req.query.keyword || " ";
@@ -60,44 +60,77 @@ export const getAllJobs = async (req, res) => {
         { description: { $regex: keyword, $options: "i" } },
       ],
     };
-    //we will get it later 
-    const jobs=await Job.find.(query)
-    if(!jobs){
-      return res.status(404).json({
-        message:"Job not found",
-        success:false
-
+    //we will get it later
+    const jobs = await Job.find(query)
+      .populate({
+        path: "company",
       })
+      .sort({
+        createdAt: -1,
+      });
+    if (!jobs) {
+      return res.status(404).json({
+        message: "Job not found",
+        success: false,
+      });
     }
     return res.status(200).json({
       jobs,
-      success:true
-    })
-
+      success: true,
+    });
   } catch (e) {
     console.log("error in getting alljobs", e);
   }
 };
 
-
-export const getJobById=async(req,res)=>{
-  try{
-    const jobId=req.params.id;
-    const job=await Job.findById(jobId);
-    if(!job){
+//student or job finder
+export const getJobById = async (req, res) => {
+  try {
+    const jobId = req.params.id;
+    const job = await Job.findById(jobId);
+    if (!job) {
       return res.status(404).json({
-       message:"Jobs not Found",
-       success:fase,
-
-
-      })
+        message: "Jobs not Found",
+        success: fase,
+      });
     }
-      return res.status(200).json({
-        message:"Job Found",
-        job,
-        success:true
-      })
-  }catch(e){
-    console.error("Error while finding getJob by  Id",e)
+    return res.status(200).json({
+      message: "Job Found",
+      job,
+      success: true,
+    });
+  } catch (e) {
+    console.error("Error while finding getJob by  Id", e);
   }
-}
+};
+
+// job created by admin to maintain
+
+export const getAdminJobs = async (req, res) => {
+  try {
+    const adminId = req.params.id;
+    const Jobs = await Job.find({ created_by: adminId })
+      .populate({
+        path: "created_by",
+      })
+      .sort({
+        createdAt: -1,
+      });
+
+    //we will use populate
+    if (!Jobs) {
+      return res.status(404).json({
+        messagea: "Job Not Found !",
+        success: false,
+      });
+    }
+
+    return res.status(200).json({
+      message: "Job found",
+      Jobs,
+      success: true,
+    });
+  } catch (e) {
+    console.error("Error For finding  Job Created by Admin", e);
+  }
+};
