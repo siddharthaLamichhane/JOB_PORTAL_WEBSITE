@@ -1,7 +1,11 @@
 import "./App.css";
-
+import { Navbar } from "./components/shared/Navbar.jsx";
 function App() {
-  return <h1 className="bg-red-700">hello siddhartha</h1>;
+  return (
+    <div>
+      <Navbar />
+    </div>
+  );
 }
 
 export default App;
