@@ -4,7 +4,9 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "../../components/ui/button.jsx";
 import { Link } from "react-router-dom";
+import { axios } from "axios";
 import { useState, useEffect } from "react";
+import { USER_API_END_POINT } from "../../utils/endpoints.jsx";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 export const Signup = () => {
   const [input, setInput] = useState({
@@ -24,6 +26,11 @@ export const Signup = () => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
+    try {
+      const res = await axios.post(`${USER_API_END_POINT}/register`);
+    } catch (e) {
+      console.log("Error while Login", e);
+    }
     console.log(input);
   };
   return (
