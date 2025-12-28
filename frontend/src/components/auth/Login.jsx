@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "../../components/ui/button.jsx";
 import { Link } from "react-router-dom";
-
+import { useState, useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 export const Login = () => {
   const [input, setInput] = useState({
@@ -14,9 +14,9 @@ export const Login = () => {
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-  const changeFileHandler = (e) => {
-    setInput({ ...input, file: e.target.files?.[0] });
-  };
+  //   const changeFileHandler = (e) => {
+  //     setInput({ ...input, file: e.target.files?.[0] });
+  //   };
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log(input);
@@ -26,7 +26,7 @@ export const Login = () => {
       <Navbar />
       <div className="flex items-center  justify-center max-w-7xl mx-auto">
         <form
-          action=""
+          onSubmit={submitHandler}
           className="w-1/2 border border-gray-200 rounded-md p-4 my-10"
         >
           <h1 className="font-bold text-xl mb-5">Login</h1>
@@ -62,6 +62,8 @@ export const Login = () => {
                   type="radio"
                   name="role"
                   value="student"
+                  checked={input.role === "student"}
+                  onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
                 <Label htmlFor="option-one">Student</Label>
@@ -71,6 +73,8 @@ export const Login = () => {
                   type="radio"
                   name="role"
                   value="recruiter"
+                  checked={input.role === "recruiter"}
+                  onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
 
