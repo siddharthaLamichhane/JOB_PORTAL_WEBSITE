@@ -51,7 +51,7 @@ export const applyJob = async (req, res) => {
   }
 };
 
-export const getAlliedJobs = async (req, res) => {
+export const getAppliedJobs = async (req, res) => {
   try {
     const userId = req.id;
 

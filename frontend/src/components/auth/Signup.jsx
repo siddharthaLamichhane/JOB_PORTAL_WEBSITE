@@ -39,9 +39,6 @@ export const Signup = () => {
     }
     try {
       const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
-        headers: {
-          "content-Type": "multipart/form-data",
-        },
         withCredentials: true,
       });
       if (res.data.success) {

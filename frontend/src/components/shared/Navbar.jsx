@@ -21,7 +21,7 @@ export const Navbar = () => {
             <li className="cursor-pointer">Browse</li>
           </ul>
           {!user ? (
-            <div className="flex item-center gap-2">
+            <div className="flex items-center gap-2">
               <Link to="/login">
                 <Button variant="outline">Login</Button>
               </Link>

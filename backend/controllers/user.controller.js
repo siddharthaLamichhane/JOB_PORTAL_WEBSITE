@@ -6,6 +6,7 @@ dotenv.config();
 export const register = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, password, role } = req.body;
+    console.log("REGISTER BODY:", req.body);
     if (!fullname || !email || !phoneNumber || !password || !role) {
       return res.status(400).json({
         message: "Something is missing",
@@ -31,8 +32,15 @@ export const register = async (req, res) => {
       message: "Account created sucessfully",
       success: true,
     });
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      return res.status(400).json({
+        message: `${field} already exists`,
+        success: false,
+      });
+    }
+
     return res.status(500).json({
       message: "Internal Server Error",
       success: false,

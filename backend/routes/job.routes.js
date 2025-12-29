@@ -4,13 +4,13 @@ import {
   getAllJobs,
   getJobById,
   getAdminJobs,
-} from "../controllers/job.controllers.js";
-import { isAuthinticated } from "../middlewares/isAuthincated.js";
+} from "../controllers/job.controller.js";
+import isAuthinticated from "../middlewares/isAuthincated.js";
 const router = express.Router();
 
-router.route("/post").post(isAuthincated, postJob);
-router.route("/get").get(isAuthincated, getAllJobs);
-router.route("/get/:id").get(isAuthincated, getJobById);
-router.route("/getadminjobs").get(isAuthincated, getAdminJobs);
+router.route("/post").post(isAuthinticated, postJob);
+router.route("/get").get(isAuthinticated, getAllJobs);
+router.route("/get/:id").get(isAuthinticated, getJobById);
+router.route("/getadminjobs").get(isAuthinticated, getAdminJobs);
 
 export default router;

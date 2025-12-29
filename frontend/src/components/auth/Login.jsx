@@ -8,13 +8,14 @@ import { Label } from "../../components/ui/label.jsx";
 import { Input } from "../../components/ui/input.jsx";
 import { Button } from "../../components/ui/button.jsx";
 import { RadioGroup } from "../../components/ui/radio-group.jsx";
-import { toast } from "../../components/ui/sonner.jsx";
+import { toast } from "sonner";
 
 export const Login = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState({
     email: "",
     password: "",
+    role: "student",
   });
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
