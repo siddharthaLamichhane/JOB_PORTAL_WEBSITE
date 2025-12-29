@@ -1,13 +1,17 @@
-import React from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
 import { USER_API_END_POINT } from "../../utils/endpoints.jsx";
 import { Navbar } from "../../components/shared/Navbar.jsx";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import { Label } from "../../components/ui/label.jsx";
+import { Input } from "../../components/ui/input.jsx";
 import { Button } from "../../components/ui/button.jsx";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { RadioGroup } from "../../components/ui/radio-group.jsx";
+import { toast } from "../../components/ui/sonner.jsx";
+
 export const Login = () => {
+  const navigate = useNavigate();
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -20,6 +24,22 @@ export const Login = () => {
   //   };
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    try {
+      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+        headers: {
+          "content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (e) {
+      console.log("Error while Login", e);
+      toast.error(e.response?.data?.message || "Login failed");
+    }
 
     console.log(input);
   };
@@ -37,7 +57,7 @@ export const Login = () => {
             <Label>Email</Label>
             <Input
               type="text"
-              placeholder="siddhartha"
+              placeholder="example@email.com"
               value={input.email}
               name="email"
               onChange={changeEventHandler}
@@ -47,7 +67,7 @@ export const Login = () => {
           <div className="my-4">
             <Label>Password</Label>
             <Input
-              type="text"
+              type="password"
               placeholder="siddhartha"
               value={input.password}
               name="password"
