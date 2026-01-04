@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { setLoading } from "../../redux/authSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+import { Loader2 } from "lucide-react";
 
 import { USER_API_END_POINT } from "../../utils/endpoints.jsx";
 import { Navbar } from "../../components/shared/Navbar.jsx";
@@ -12,6 +15,8 @@ import { toast } from "sonner";
 
 export const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loading = useSelector((store) => store.auth.loading);
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -27,6 +32,7 @@ export const Login = () => {
     e.preventDefault();
 
     try {
+      dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
         headers: {
           "content-Type": "application/json",
@@ -40,9 +46,9 @@ export const Login = () => {
     } catch (e) {
       console.log("Error while Login", e);
       toast.error(e.response?.data?.message || "Login failed");
+    } finally {
+      dispatch(setLoading(false));
     }
-
-    console.log(input);
   };
   return (
     <div>
@@ -110,9 +116,17 @@ export const Login = () => {
             </div> */}
           </div>
 
-          <Button type="submit" className="w-full my-4">
-            Login
-          </Button>
+          {loading ? (
+            <Button disabled className="w-full my-4 flex items-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button type="submit" className="w-full my-4">
+              Login
+            </Button>
+          )}
+
           <span>
             New to here ?
             <Link to="/signup" className="text-blue-700">
