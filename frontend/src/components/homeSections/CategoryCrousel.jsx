@@ -27,7 +27,9 @@ export const CategoryCrousel = () => {
         <CarouselContent>
           {Category.map((cat, index) => (
             <CarouselItem className="md:basic-1/2 lg:basis-1/3">
-              <Button>{cat}</Button>
+              <Button variant="outline" className=" rounded-full">
+                {cat}
+              </Button>
             </CarouselItem>
           ))}
         </CarouselContent>
