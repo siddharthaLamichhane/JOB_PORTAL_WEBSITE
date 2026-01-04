@@ -10,6 +10,9 @@ import { USER_API_END_POINT } from "../../utils/endpoints.jsx";
 import { RadioGroup } from "@/components/ui/radio-group";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { Loader2 } from "lucide-react";
+import { setLoading } from "../../redux/authSlice.js";
 export const Signup = () => {
   const [input, setInput] = useState({
     fullname: "",
@@ -20,6 +23,8 @@ export const Signup = () => {
     file: null,
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loading = useSelector((store) => store.auth.loading);
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -28,6 +33,7 @@ export const Signup = () => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.append("fullname", input.fullname);
     formData.append("email", input.email);
@@ -38,6 +44,7 @@ export const Signup = () => {
       formData.append("file", input.file);
     }
     try {
+      dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
         withCredentials: true,
       });
@@ -48,6 +55,8 @@ export const Signup = () => {
     } catch (e) {
       console.log("Error while Signup", e);
       toast.error(e.response?.data?.message || "Signup failed");
+    } finally {
+      dispatch(setLoading(false));
     }
     console.log(input);
   };
@@ -140,9 +149,17 @@ export const Signup = () => {
             </div>
           </div>
 
-          <Button type="submit" className="w-full my-4">
-            Signup
-          </Button>
+          {loading ? (
+            <Button disabled className="w-full my-4 flex items-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button type="submit" className="w-full my-4">
+              Signup
+            </Button>
+          )}
+
           <span>
             Already have an account ?
             <Link to="/login" className="text-blue-700">
