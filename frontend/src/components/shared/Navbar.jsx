@@ -20,10 +20,10 @@ export const Navbar = () => {
               <Link to="/">Home</Link>
             </li>
             <li className="cursor-pointer">
-              <Link to="jobs">Jobs</Link>
+              <Link to="/jobs">Jobs</Link>
             </li>
             <li className="cursor-pointer">
-              <Link to="browse">Browse</Link>
+              <Link to="/browse">Browse</Link>
             </li>
           </ul>
           {!user ? (
