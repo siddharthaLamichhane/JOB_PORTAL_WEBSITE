@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { setLoading } from "../../redux/authSlice.js";
+import { setLoading, setUser } from "../../redux/authSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader2 } from "lucide-react";
 
@@ -40,6 +40,8 @@ export const Login = () => {
         withCredentials: true,
       });
       if (res.data.success) {
+        console.log(res.data);
+        dispatch(setUser(res.data.userData));
         navigate("/");
         toast.success(res.data.message);
       }
