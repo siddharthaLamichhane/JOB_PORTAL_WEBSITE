@@ -3,7 +3,11 @@ import { Bookmark } from "lucide-react";
 import { Button } from "../../components/ui/button.jsx";
 import { Avatar, AvatarImage } from "../../components/ui/avatar.jsx";
 import { Badge } from "../../components/ui/badge.jsx";
+import { useNavigate } from "react-router-dom";
+
 export const JobCard = () => {
+  const navigate = useNavigate();
+  const JobId = "siddhartha";
   return (
     <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100">
       <div className="flex items-center justify-between">
@@ -41,7 +45,11 @@ export const JobCard = () => {
         24LPA
       </Badge>
       <div className="flex items-center gap-5 mt-4">
-        <Button className="" variant="outline">
+        <Button
+          className=""
+          variant="outline"
+          onClick={() => navigate(`/description/${JobId}`)}
+        >
           Details
         </Button>
         <Button className="bg-[#7209b7] text-white" variant="outline">
