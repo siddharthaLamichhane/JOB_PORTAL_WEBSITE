@@ -1,4 +1,5 @@
 import React from "react";
+import { Badge } from "../ui/badge.jsx";
 import {
   Table,
   TableBody,
@@ -22,12 +23,16 @@ export const AppliedJobTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">INV001</TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className="text-right">$250.00</TableCell>
-          </TableRow>
+          {[1, 2, 3, 4].map((item, index) => (
+            <TableRow key={index}>
+              <TableCell className="font-medium">01/09/2026</TableCell>
+              <TableCell>Frontend Developer</TableCell>
+              <TableCell>Google</TableCell>
+              <TableCell className="text-right">
+                <Badge variant="outline">Selected</Badge>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>

@@ -85,7 +85,7 @@ export const Profile = () => {
         </div>
       </div>
       <div className="max-w-4xl mx-auto  bg-white rounded-2xl border border-gray-600  my-5 p-8">
-        <h1>Applied Job</h1>
+        <h1 className="font-bold text-lg my-5">Applied Job</h1>
         {/* Application table */}
         <AppliedJobTable />
       </div>
